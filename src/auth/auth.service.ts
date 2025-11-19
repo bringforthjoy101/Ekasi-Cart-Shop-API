@@ -260,36 +260,6 @@ export class AuthService {
   }
 
   /**
-   * Validate user age for liquor purchases
-   */
-  async validateUserAge(userId: number): Promise<boolean> {
-    try {
-      return await this.cellerHutAuthService.validateUserAge(userId);
-    } catch (error) {
-      console.error('[Auth Service] Age validation failed:', error);
-      return false;
-    }
-  }
-
-  /**
-   * Get user's purchase history
-   */
-  async getUserPurchaseHistory(
-    userId: number,
-    limit: number = 10,
-  ): Promise<any[]> {
-    try {
-      return await this.cellerHutAuthService.getUserPurchaseHistory(
-        userId,
-        limit,
-      );
-    } catch (error) {
-      console.error('[Auth Service] Get purchase history failed:', error);
-      return [];
-    }
-  }
-
-  /**
    * Registration OTP Flow Methods
    */
 

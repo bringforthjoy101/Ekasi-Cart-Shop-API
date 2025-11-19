@@ -98,9 +98,6 @@ export const transformCellerHutProduct = (cellerHutProduct: any): any => {
     ...(cellerHutProduct.serving_temperature !== undefined && {
       serving_temperature: cellerHutProduct.serving_temperature,
     }),
-    ...(cellerHutProduct.age_restricted !== undefined && {
-      age_restricted: cellerHutProduct.age_restricted,
-    }),
   };
 };
 

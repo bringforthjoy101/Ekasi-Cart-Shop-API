@@ -100,7 +100,6 @@ Authorization: Bearer {jwt_token}
 	"vintage": 2020,
 	"tasting_notes": ["berry", "spice"],
 	"food_pairings": ["meat", "cheese"],
-	"age_restricted": true,
 	"category": {
 		"id": 11,
 		"name": "Red Wines",

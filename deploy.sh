@@ -336,9 +336,9 @@ setup_application() {
     fi
 
     # Navigate to shop-api directory
-    if [ -d "$REPO_DIR/shop-api" ]; then
-        log_info "Found shop-api subdirectory. Using $REPO_DIR/shop-api as application root."
-        APP_DIR="$REPO_DIR/shop-api"
+    if [ -d "$REPO_DIR" ]; then
+        log_info "Found shop-api subdirectory. Using $REPO_DIR as application root."
+        APP_DIR="$REPO_DIR"
         cd $APP_DIR
     else
         log_error "shop-api directory not found in repository!"

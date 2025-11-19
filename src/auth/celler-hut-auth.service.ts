@@ -522,43 +522,6 @@ export class CellerHutAuthService {
   }
 
   /**
-   * Validate user age for liquor purchases (South African law: 18+)
-   */
-  async validateUserAge(userId: number): Promise<boolean> {
-    try {
-      const response = await cellerHutAPI.get(
-        `/ecommerce/users/${userId}/age-verification`,
-      );
-      return response.data.is_of_legal_age || false;
-    } catch (error) {
-      console.error('[Ekasi Cart Auth] Age validation failed:', error);
-      return false;
-    }
-  }
-
-  /**
-   * Get user's liquor purchase history for compliance
-   */
-  async getUserPurchaseHistory(
-    userId: number,
-    limit: number = 10,
-  ): Promise<any[]> {
-    try {
-      const response = await cellerHutAPI.get(
-        `/ecommerce/users/${userId}/purchase-history`,
-        {
-          params: { limit, liquor_only: true },
-        },
-      );
-
-      return response.data.data || [];
-    } catch (error) {
-      console.error('[Ekasi Cart Auth] Get purchase history failed:', error);
-      return [];
-    }
-  }
-
-  /**
    * Get all addresses for the authenticated user
    */
   async getAddresses(token: string): Promise<any[]> {
