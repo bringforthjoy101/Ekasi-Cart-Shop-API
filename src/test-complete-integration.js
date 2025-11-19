@@ -3,10 +3,10 @@ const axios = require('axios');
 const API_BASE_URL = 'http://localhost:3001/api';
 
 /**
- * Comprehensive Integration Test for all Celler Hut API modules
+ * Comprehensive Integration Test for all Ekasi Cart API modules
  */
 async function testCompleteIntegration() {
-  console.log('🧪 Testing Complete Celler Hut API Integration\n');
+  console.log('🧪 Testing Complete Ekasi Cart API Integration\n');
   console.log('📋 Testing: Products, Orders, Categories, and Auth modules\n');
 
   let totalTests = 0;
@@ -193,7 +193,7 @@ async function testCompleteIntegration() {
   });
 
   if (passedTests >= totalTests * 0.8) {
-    console.log('\n🎉 EXCELLENT! Celler Hut API integration is working great!');
+    console.log('\n🎉 EXCELLENT! Ekasi Cart API integration is working great!');
     console.log('🚀 All core modules are successfully integrated');
   } else if (passedTests >= totalTests * 0.6) {
     console.log('\n✅ GOOD! Most integration tests passed');

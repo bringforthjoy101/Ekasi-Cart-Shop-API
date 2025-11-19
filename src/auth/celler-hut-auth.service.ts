@@ -26,7 +26,7 @@ import { User, Permission } from '../users/entities/user.entity';
 @Injectable()
 export class CellerHutAuthService {
   /**
-   * Register a new user with Celler Hut API
+   * Register a new user with Ekasi Cart API
    */
   async register(registerDto: RegisterDto): Promise<AuthResponse> {
     try {
@@ -53,7 +53,7 @@ export class CellerHutAuthService {
         last_name: userData.last_name,
       };
     } catch (error) {
-      console.error('[Celler Hut Auth] Registration failed:', error);
+      console.error('[Ekasi Cart Auth] Registration failed:', error);
 
       if (error.response?.status === 422) {
         throw new Error('Email already exists or invalid data provided');
@@ -64,7 +64,7 @@ export class CellerHutAuthService {
   }
 
   /**
-   * Login user with Celler Hut API
+   * Login user with Ekasi Cart API
    */
   async login(loginDto: LoginDto): Promise<AuthResponse> {
     try {
@@ -90,7 +90,7 @@ export class CellerHutAuthService {
         last_name: userData.last_name,
       };
     } catch (error) {
-      console.error('[Celler Hut Auth] Login failed:', error);
+      console.error('[Ekasi Cart Auth] Login failed:', error);
 
       // Check statusCode property added by celler-hut-client interceptor
       if ((error as any).statusCode === 401) {
@@ -127,7 +127,7 @@ export class CellerHutAuthService {
         message: 'Password changed successfully',
       };
     } catch (error) {
-      console.error('[Celler Hut Auth] Change password failed:', error);
+      console.error('[Ekasi Cart Auth] Change password failed:', error);
 
       if (error.response?.status === 400) {
         throw new Error('Current password is incorrect');
@@ -156,7 +156,7 @@ export class CellerHutAuthService {
         message: 'Password reset link sent to your email',
       };
     } catch (error) {
-      console.error('[Celler Hut Auth] Forgot password failed:', error);
+      console.error('[Ekasi Cart Auth] Forgot password failed:', error);
 
       if (error.response?.status === 404) {
         throw new Error('Email address not found');
@@ -186,7 +186,7 @@ export class CellerHutAuthService {
         message: 'Token verified successfully',
       };
     } catch (error) {
-      console.error('[Celler Hut Auth] Token verification failed:', error);
+      console.error('[Ekasi Cart Auth] Token verification failed:', error);
 
       if (error.response?.status === 400) {
         throw new Error('Invalid or expired token');
@@ -217,7 +217,7 @@ export class CellerHutAuthService {
         message: 'Password reset successfully',
       };
     } catch (error) {
-      console.error('[Celler Hut Auth] Password reset failed:', error);
+      console.error('[Ekasi Cart Auth] Password reset failed:', error);
 
       if (error.response?.status === 400) {
         throw new Error('Invalid or expired token');
@@ -257,7 +257,7 @@ export class CellerHutAuthService {
         last_name: userData.last_name,
       };
     } catch (error) {
-      console.error('[Celler Hut Auth] Social login failed:', error);
+      console.error('[Ekasi Cart Auth] Social login failed:', error);
       throw new Error('Social login failed. Please try again.');
     }
   }
@@ -290,7 +290,7 @@ export class CellerHutAuthService {
         last_name: userData.last_name,
       };
     } catch (error) {
-      console.error('[Celler Hut Auth] OTP login failed:', error);
+      console.error('[Ekasi Cart Auth] OTP login failed:', error);
 
       if (error.response?.status === 400) {
         throw new Error('Invalid OTP code');
@@ -318,7 +318,7 @@ export class CellerHutAuthService {
         is_contact_exist: response.data.user_exists || false,
       };
     } catch (error) {
-      console.error('[Celler Hut Auth] Send OTP failed:', error);
+      console.error('[Ekasi Cart Auth] Send OTP failed:', error);
 
       return {
         success: false,
@@ -347,7 +347,7 @@ export class CellerHutAuthService {
         message: 'OTP verified successfully',
       };
     } catch (error) {
-      console.error('[Celler Hut Auth] OTP verification failed:', error);
+      console.error('[Ekasi Cart Auth] OTP verification failed:', error);
 
       if (error.response?.status === 400) {
         return {
@@ -376,7 +376,7 @@ export class CellerHutAuthService {
 
       return this.transformCellerHutUser(response.data);
     } catch (error) {
-      console.error('[Celler Hut Auth] Get current user failed:', error);
+      console.error('[Ekasi Cart Auth] Get current user failed:', error);
       throw new Error('Failed to get user profile');
     }
   }
@@ -401,7 +401,7 @@ export class CellerHutAuthService {
         message: 'Logged out successfully',
       };
     } catch (error) {
-      console.error('[Celler Hut Auth] Logout failed:', error);
+      console.error('[Ekasi Cart Auth] Logout failed:', error);
 
       return {
         success: true,
@@ -436,7 +436,7 @@ export class CellerHutAuthService {
         last_name: userData.last_name,
       };
     } catch (error) {
-      console.error('[Celler Hut Auth] Token refresh failed:', error);
+      console.error('[Ekasi Cart Auth] Token refresh failed:', error);
       throw new Error('Token refresh failed. Please login again.');
     }
   }
@@ -458,13 +458,13 @@ export class CellerHutAuthService {
 
       return this.transformCellerHutUser(response.data);
     } catch (error) {
-      console.error('[Celler Hut Auth] Profile update failed:', error);
+      console.error('[Ekasi Cart Auth] Profile update failed:', error);
       throw new Error('Failed to update profile');
     }
   }
 
   /**
-   * Map Celler Hut user roles to PickBazar permissions
+   * Map Ekasi Cart user roles to PickBazar permissions
    */
   private mapUserPermissions(role: string): string[] {
     const rolePermissions = {
@@ -479,7 +479,7 @@ export class CellerHutAuthService {
   }
 
   /**
-   * Transform Celler Hut user data to PickBazar User entity
+   * Transform Ekasi Cart user data to PickBazar User entity
    */
   private transformCellerHutUser(cellerHutUser: any): User {
     // Create permissions array
@@ -531,7 +531,7 @@ export class CellerHutAuthService {
       );
       return response.data.is_of_legal_age || false;
     } catch (error) {
-      console.error('[Celler Hut Auth] Age validation failed:', error);
+      console.error('[Ekasi Cart Auth] Age validation failed:', error);
       return false;
     }
   }
@@ -553,7 +553,7 @@ export class CellerHutAuthService {
 
       return response.data.data || [];
     } catch (error) {
-      console.error('[Celler Hut Auth] Get purchase history failed:', error);
+      console.error('[Ekasi Cart Auth] Get purchase history failed:', error);
       return [];
     }
   }
@@ -571,7 +571,7 @@ export class CellerHutAuthService {
 
       return response.data || [];
     } catch (error) {
-      console.error('[Celler Hut Auth] Get addresses failed:', error);
+      console.error('[Ekasi Cart Auth] Get addresses failed:', error);
       throw new Error('Failed to get addresses');
     }
   }
@@ -593,7 +593,7 @@ export class CellerHutAuthService {
 
       return response.data;
     } catch (error) {
-      console.error('[Celler Hut Auth] Add address failed:', error);
+      console.error('[Ekasi Cart Auth] Add address failed:', error);
       throw new Error('Failed to add address');
     }
   }
@@ -619,7 +619,7 @@ export class CellerHutAuthService {
 
       return response.data;
     } catch (error) {
-      console.error('[Celler Hut Auth] Update address failed:', error);
+      console.error('[Ekasi Cart Auth] Update address failed:', error);
       throw new Error('Failed to update address');
     }
   }
@@ -640,7 +640,7 @@ export class CellerHutAuthService {
 
       return response.data;
     } catch (error) {
-      console.error('[Celler Hut Auth] Delete address failed:', error);
+      console.error('[Ekasi Cart Auth] Delete address failed:', error);
       throw new Error('Failed to delete address');
     }
   }
@@ -670,7 +670,7 @@ export class CellerHutAuthService {
 
       return response.data;
     } catch (error) {
-      console.error('[Celler Hut Auth] Initiate registration failed:', error);
+      console.error('[Ekasi Cart Auth] Initiate registration failed:', error);
 
       // Handle specific error cases
       if (error.response?.status === 409) {
@@ -708,7 +708,7 @@ export class CellerHutAuthService {
       // The backend returns: { token, permissions, customer }
       return response.data;
     } catch (error) {
-      console.error('[Celler Hut Auth] Verify registration failed:', error);
+      console.error('[Ekasi Cart Auth] Verify registration failed:', error);
 
       // Handle specific error cases
       if (error.response?.status === 404) {
@@ -744,7 +744,7 @@ export class CellerHutAuthService {
 
       return response.data;
     } catch (error) {
-      console.error('[Celler Hut Auth] Resend OTP failed:', error);
+      console.error('[Ekasi Cart Auth] Resend OTP failed:', error);
 
       // Handle specific error cases
       if (error.response?.status === 404) {

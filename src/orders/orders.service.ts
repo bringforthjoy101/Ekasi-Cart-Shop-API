@@ -45,7 +45,7 @@ export class OrdersService {
     createOrderInput: CreateOrderDto,
     token?: string,
   ): Promise<Order> {
-    console.log('[Orders Service] Creating order via Celler Hut API...');
+    console.log('[Orders Service] Creating order via Ekasi Cart API...');
     console.log('[Orders Service] Order data:', JSON.stringify(createOrderInput, null, 2));
 
     try {
@@ -111,7 +111,7 @@ export class OrdersService {
     page,
     search,
   }: GetOrderStatusesDto): OrderStatusPaginator {
-    // TODO: Implement order statuses endpoint in Celler Hut API
+    // TODO: Implement order statuses endpoint in Ekasi Cart API
     console.warn('[Orders Service] getOrderStatuses not implemented - returning empty results');
     if (!page) page = 1;
     if (!limit) limit = 30;
@@ -124,7 +124,7 @@ export class OrdersService {
   }
 
   getOrderStatus(param: string) {
-    // TODO: Implement order status endpoint in Celler Hut API
+    // TODO: Implement order status endpoint in Ekasi Cart API
     console.warn('[Orders Service] getOrderStatus not implemented');
     return null;
   }
@@ -155,19 +155,19 @@ export class OrdersService {
   }
 
   createOrderStatus() {
-    // TODO: Implement create order status endpoint in Celler Hut API
+    // TODO: Implement create order status endpoint in Ekasi Cart API
     console.warn('[Orders Service] createOrderStatus not implemented');
     throw new Error('Creating order statuses is not yet implemented');
   }
 
   updateOrderStatus() {
-    // TODO: Implement update order status endpoint in Celler Hut API
+    // TODO: Implement update order status endpoint in Ekasi Cart API
     console.warn('[Orders Service] updateOrderStatus not implemented');
     throw new Error('Updating order statuses is not yet implemented');
   }
 
   async getOrderFileItems({ page, limit }: GetOrderFilesDto) {
-    // TODO: Implement digital file downloads endpoint in Celler Hut API
+    // TODO: Implement digital file downloads endpoint in Ekasi Cart API
     console.warn('[Orders Service] getOrderFileItems not implemented - returning empty results');
     if (!page) page = 1;
     if (!limit) limit = 30;
@@ -180,19 +180,19 @@ export class OrdersService {
   }
 
   async getDigitalFileDownloadUrl(digitalFileId: number) {
-    // TODO: Implement digital file download URL endpoint in Celler Hut API
+    // TODO: Implement digital file download URL endpoint in Ekasi Cart API
     console.warn('[Orders Service] getDigitalFileDownloadUrl not implemented');
     throw new Error('Digital file downloads are not yet implemented');
   }
 
   async exportOrder(shop_id: string) {
-    // TODO: Implement order export endpoint in Celler Hut API
+    // TODO: Implement order export endpoint in Ekasi Cart API
     console.warn('[Orders Service] exportOrder not implemented');
     throw new Error('Order export is not yet implemented');
   }
 
   async downloadInvoiceUrl(shop_id: string) {
-    // TODO: Implement invoice download endpoint in Celler Hut API
+    // TODO: Implement invoice download endpoint in Ekasi Cart API
     console.warn('[Orders Service] downloadInvoiceUrl not implemented');
     throw new Error('Invoice download is not yet implemented');
   }

@@ -12,7 +12,7 @@ export class CategoriesService {
   ) {}
 
   /**
-   * Create a new category using Celler Hut API
+   * Create a new category using Ekasi Cart API
    */
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     try {
@@ -24,7 +24,7 @@ export class CategoriesService {
   }
 
   /**
-   * Get categories with pagination and filtering from Celler Hut API
+   * Get categories with pagination and filtering from Ekasi Cart API
    */
   async getCategories(params: GetCategoriesDto): Promise<any> {
     try {
@@ -48,7 +48,7 @@ export class CategoriesService {
   }
 
   /**
-   * Get a single category by ID or slug from Celler Hut API
+   * Get a single category by ID or slug from Ekasi Cart API
    */
   async getCategory(param: string, language: string): Promise<Category> {
     try {
@@ -60,7 +60,7 @@ export class CategoriesService {
   }
 
   /**
-   * Update a category using Celler Hut API
+   * Update a category using Ekasi Cart API
    */
   async update(
     id: number,
@@ -78,7 +78,7 @@ export class CategoriesService {
   }
 
   /**
-   * Remove a category using Celler Hut API
+   * Remove a category using Ekasi Cart API
    */
   async remove(id: number): Promise<string> {
     try {

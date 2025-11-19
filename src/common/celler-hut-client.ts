@@ -6,12 +6,12 @@ import axios, {
 
 // Environment configuration
 const CELLER_HUT_API_URL =
-  process.env.CELLER_HUT_API_URL || 'http://localhost:8000';
+  process.env.CELLER_HUT_API_URL || 'https://api.ekasicart.com';
 const CELLER_HUT_API_TIMEOUT = parseInt(
   process.env.CELLER_HUT_API_TIMEOUT || '30000',
 );
 
-// Create axios instance for Celler Hut API
+// Create axios instance for Ekasi Cart API
 const cellerHutAPI = axios.create({
   baseURL: CELLER_HUT_API_URL,
   timeout: Number(12000),
@@ -45,14 +45,14 @@ cellerHutAPI.interceptors.request.use(
     // Log request for debugging (only in development)
     if (process.env.NODE_ENV === 'development') {
       console.log(
-        `[Celler Hut API] ${config.method?.toUpperCase()} ${config.url}`,
+        `[Ekasi Cart API] ${config.method?.toUpperCase()} ${config.url}`,
       );
     }
 
     return config;
   },
   (error) => {
-    console.error('[Celler Hut API] Request error:', error);
+    console.error('[Ekasi Cart API] Request error:', error);
     return Promise.reject(error);
   },
 );
@@ -60,12 +60,12 @@ cellerHutAPI.interceptors.request.use(
 // Response interceptor for data extraction and error handling
 cellerHutAPI.interceptors.response.use(
   (response: AxiosResponse) => {
-    // Extract data from Celler Hut response wrapper
-    // Celler Hut format: { status: "success", message: "...", data: {...} }
+    // Extract data from Ekasi Cart response wrapper
+    // Ekasi Cart format: { status: "success", message: "...", data: {...} }
     // Transform to: {...} (direct data)
 
     if (response.data && typeof response.data === 'object') {
-      // If response has Celler Hut wrapper format
+      // If response has Ekasi Cart wrapper format
       if (
         response.data.status === 'success' &&
         response.data.data !== undefined
@@ -83,11 +83,11 @@ cellerHutAPI.interceptors.response.use(
     return response;
   },
   (error: AxiosError) => {
-    // Handle Celler Hut error format
+    // Handle Ekasi Cart error format
     if (error.response?.data) {
       const errorData = error.response.data as any;
 
-      // Transform Celler Hut error format to standard format
+      // Transform Ekasi Cart error format to standard format
       if (errorData.status === 'error') {
         const transformedError = {
           statusCode: error.response.status,
@@ -96,7 +96,7 @@ cellerHutAPI.interceptors.response.use(
         };
 
         // Log error for debugging
-        console.error('[Celler Hut API] Error:', transformedError);
+        console.error('[Ekasi Cart API] Error:', transformedError);
 
         // Create new error with transformed data
         const newError = new Error(transformedError.message);
@@ -109,21 +109,21 @@ cellerHutAPI.interceptors.response.use(
 
     // Handle network errors
     if (error.code === 'ECONNABORTED') {
-      console.error('[Celler Hut API] Request timeout');
+      console.error('[Ekasi Cart API] Request timeout');
       return Promise.reject(
-        new Error('Request timeout - Celler Hut API not responding'),
+        new Error('Request timeout - Ekasi Cart API not responding'),
       );
     }
 
     if (error.code === 'ERR_NETWORK') {
-      console.error('[Celler Hut API] Network error');
+      console.error('[Ekasi Cart API] Network error');
       return Promise.reject(
-        new Error('Network error - Unable to reach Celler Hut API'),
+        new Error('Network error - Unable to reach Ekasi Cart API'),
       );
     }
 
     // Default error handling
-    console.error('[Celler Hut API] Unexpected error:', error);
+    console.error('[Ekasi Cart API] Unexpected error:', error);
     return Promise.reject(error);
   },
 );
@@ -136,7 +136,7 @@ export const checkCellerHutHealth = async (): Promise<boolean> => {
     });
     return response.status === 200;
   } catch (error) {
-    console.error('[Celler Hut API] Health check failed:', error);
+    console.error('[Ekasi Cart API] Health check failed:', error);
     return false;
   }
 };

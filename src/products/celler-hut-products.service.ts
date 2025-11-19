@@ -11,7 +11,7 @@ import { GetBestSellingProductsDto } from './dto/get-best-selling-products.dto';
 @Injectable()
 export class CellerHutProductsService {
   /**
-   * Get products from Celler Hut API with pagination and filtering
+   * Get products from Ekasi Cart API with pagination and filtering
    */
   async getProducts({
     limit,
@@ -24,7 +24,7 @@ export class CellerHutProductsService {
         limit: limit || 30,
       };
 
-      // Parse search parameters for Celler Hut API
+      // Parse search parameters for Ekasi Cart API
       if (search) {
         const searchParams = this.parseSearchParams(search);
         Object.assign(params, searchParams);
@@ -34,14 +34,14 @@ export class CellerHutProductsService {
         params,
       });
 
-      //   console.log(response.data.data.data);
+        console.log(response.data);
 
-      // Transform Celler Hut response to PickBazar format
+      // Transform Ekasi Cart response to PickBazar format
       const transformedData = Array.isArray(response.data.data.data)
         ? response.data.data.data.map(transformCellerHutProduct)
         : [];
 
-      //   console.log({ transformedData });
+        console.log({ transformedData });
 
       // Transform pagination
       const pagination = transformPagination(response.data);
@@ -51,13 +51,13 @@ export class CellerHutProductsService {
         ...pagination,
       };
     } catch (error) {
-      console.error('[Celler Hut Products] Get products failed:', error);
-      throw new Error('Failed to fetch products from Celler Hut API');
+      console.error('[Ekasi Cart Products] Get products failed:', error);
+      throw new Error('Failed to fetch products from Ekasi Cart API');
     }
   }
 
   /**
-   * Get product by slug from Celler Hut API
+   * Get product by slug from Ekasi Cart API
    */
   async getProductBySlug(slug: string): Promise<any> {
     try {
@@ -75,26 +75,26 @@ export class CellerHutProductsService {
         related_products: relatedProducts,
       };
     } catch (error) {
-      console.error('[Celler Hut Products] Get product by slug failed:', error);
+      console.error('[Ekasi Cart Products] Get product by slug failed:', error);
       throw new Error(`Product with slug "${slug}" not found`);
     }
   }
 
   /**
-   * Get product by ID from Celler Hut API
+   * Get product by ID from Ekasi Cart API
    */
   async getProductById(id: number): Promise<any> {
     try {
       const response = await cellerHutAPI.get(`/ecommerce/products/${id}`);
       return transformCellerHutProduct(response.data);
     } catch (error) {
-      console.error('[Celler Hut Products] Get product by ID failed:', error);
+      console.error('[Ekasi Cart Products] Get product by ID failed:', error);
       throw new Error(`Product with ID "${id}" not found`);
     }
   }
 
   /**
-   * Get popular products from Celler Hut API
+   * Get popular products from Ekasi Cart API
    */
   async getPopularProducts({
     limit,
@@ -119,7 +119,7 @@ export class CellerHutProductsService {
         : [];
     } catch (error) {
       console.error(
-        '[Celler Hut Products] Get popular products failed:',
+        '[Ekasi Cart Products] Get popular products failed:',
         error,
       );
       return [];
@@ -127,7 +127,7 @@ export class CellerHutProductsService {
   }
 
   /**
-   * Get best selling products from Celler Hut API
+   * Get best selling products from Ekasi Cart API
    */
   async getBestSellingProducts({
     limit,
@@ -152,7 +152,7 @@ export class CellerHutProductsService {
         : [];
     } catch (error) {
       console.error(
-        '[Celler Hut Products] Get best selling products failed:',
+        '[Ekasi Cart Products] Get best selling products failed:',
         error,
       );
       return [];
@@ -160,7 +160,7 @@ export class CellerHutProductsService {
   }
 
   /**
-   * Get products with low stock from Celler Hut API
+   * Get products with low stock from Ekasi Cart API
    */
   async getProductsStock({
     limit,
@@ -194,13 +194,13 @@ export class CellerHutProductsService {
         ...pagination,
       };
     } catch (error) {
-      console.error('[Celler Hut Products] Get stock products failed:', error);
-      throw new Error('Failed to fetch stock products from Celler Hut API');
+      console.error('[Ekasi Cart Products] Get stock products failed:', error);
+      throw new Error('Failed to fetch stock products from Ekasi Cart API');
     }
   }
 
   /**
-   * Get draft products from Celler Hut API
+   * Get draft products from Ekasi Cart API
    */
   async getDraftProducts({
     limit,
@@ -234,8 +234,8 @@ export class CellerHutProductsService {
         ...pagination,
       };
     } catch (error) {
-      console.error('[Celler Hut Products] Get draft products failed:', error);
-      throw new Error('Failed to fetch draft products from Celler Hut API');
+      console.error('[Ekasi Cart Products] Get draft products failed:', error);
+      throw new Error('Failed to fetch draft products from Ekasi Cart API');
     }
   }
 
@@ -269,7 +269,7 @@ export class CellerHutProductsService {
         ? response.data.data.map(transformCellerHutProduct)
         : [];
     } catch (error) {
-      console.error('[Celler Hut Products] Search products failed:', error);
+      console.error('[Ekasi Cart Products] Search products failed:', error);
       return [];
     }
   }
@@ -305,7 +305,7 @@ export class CellerHutProductsService {
       };
     } catch (error) {
       console.error(
-        '[Celler Hut Products] Get products by category failed:',
+        '[Ekasi Cart Products] Get products by category failed:',
         error,
       );
       throw new Error(
@@ -315,7 +315,7 @@ export class CellerHutProductsService {
   }
 
   /**
-   * Parse PickBazar search parameters for Celler Hut API
+   * Parse PickBazar search parameters for Ekasi Cart API
    */
   private parseSearchParams(search: string): any {
     const params: any = {};
@@ -400,7 +400,7 @@ export class CellerHutProductsService {
       return transformedData;
     } catch (error) {
       console.error(
-        '[Celler Hut Products] Get related products failed:',
+        '[Ekasi Cart Products] Get related products failed:',
         error,
       );
       return [];

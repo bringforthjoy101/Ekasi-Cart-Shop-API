@@ -1,5 +1,5 @@
-// Data transformation utilities for Celler Hut API integration
-// Maps between Celler Hut API responses and PickBazar data structures
+// Data transformation utilities for Ekasi Cart API integration
+// Maps between Ekasi Cart API responses and PickBazar data structures
 
 // Using any types for flexibility during API integration
 // TODO: Create proper interfaces once API integration is stable
@@ -28,7 +28,7 @@ export const transformCellerHutUser = (cellerHutUser: any): any => {
   };
 };
 
-// Address transformation (Celler Hut → PickBazar)
+// Address transformation (Ekasi Cart → PickBazar)
 export const transformAddress = (cellerHutAddress: any) => {
   return {
     ...cellerHutAddress,
@@ -38,7 +38,7 @@ export const transformAddress = (cellerHutAddress: any) => {
   };
 };
 
-// Reverse address transformation (PickBazar → Celler Hut)
+// Reverse address transformation (PickBazar → Ekasi Cart)
 export const transformAddressForCellerHut = (pickBazarAddress: any) => {
   return {
     ...pickBazarAddress,
@@ -257,7 +257,7 @@ export const transformCellerHutError = (error: any) => {
   };
 };
 
-// Order creation payload transformation (PickBazar → Celler Hut)
+// Order creation payload transformation (PickBazar → Ekasi Cart)
 export const transformOrderForCellerHut = (pickBazarOrder: any) => {
   return {
     ...pickBazarOrder,

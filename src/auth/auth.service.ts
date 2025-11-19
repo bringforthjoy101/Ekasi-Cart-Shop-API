@@ -28,7 +28,7 @@ export class AuthService {
   constructor(private readonly cellerHutAuthService: CellerHutAuthService) {}
 
   /**
-   * Register a new user using Celler Hut API
+   * Register a new user using Ekasi Cart API
    */
   async register(createUserInput: RegisterDto): Promise<AuthResponse> {
     try {
@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   /**
-   * Login user using Celler Hut API
+   * Login user using Ekasi Cart API
    */
   async login(loginInput: LoginDto): Promise<AuthResponse> {
     try {
@@ -53,7 +53,7 @@ export class AuthService {
   }
 
   /**
-   * Change password using Celler Hut API
+   * Change password using Ekasi Cart API
    */
   async changePassword(
     changePasswordInput: ChangePasswordDto,
@@ -74,7 +74,7 @@ export class AuthService {
   }
 
   /**
-   * Initiate forgot password process using Celler Hut API
+   * Initiate forgot password process using Ekasi Cart API
    */
   async forgetPassword(
     forgetPasswordInput: ForgetPasswordDto,
@@ -93,7 +93,7 @@ export class AuthService {
   }
 
   /**
-   * Verify forgot password token using Celler Hut API
+   * Verify forgot password token using Ekasi Cart API
    */
   async verifyForgetPasswordToken(
     verifyForgetPasswordTokenInput: VerifyForgetPasswordDto,
@@ -112,7 +112,7 @@ export class AuthService {
   }
 
   /**
-   * Reset password using Celler Hut API
+   * Reset password using Ekasi Cart API
    */
   async resetPassword(
     resetPasswordInput: ResetPasswordDto,
@@ -129,7 +129,7 @@ export class AuthService {
   }
 
   /**
-   * Social login using Celler Hut API
+   * Social login using Ekasi Cart API
    */
   async socialLogin(socialLoginDto: SocialLoginDto): Promise<AuthResponse> {
     try {
@@ -146,7 +146,7 @@ export class AuthService {
   }
 
   /**
-   * OTP login using Celler Hut API
+   * OTP login using Ekasi Cart API
    */
   async otpLogin(otpLoginDto: OtpLoginDto): Promise<AuthResponse> {
     try {
@@ -163,7 +163,7 @@ export class AuthService {
   }
 
   /**
-   * Verify OTP code using Celler Hut API
+   * Verify OTP code using Ekasi Cart API
    */
   async verifyOtpCode(verifyOtpInput: VerifyOtpDto): Promise<CoreResponse> {
     try {
@@ -178,7 +178,7 @@ export class AuthService {
   }
 
   /**
-   * Send OTP code using Celler Hut API
+   * Send OTP code using Ekasi Cart API
    */
   async sendOtpCode(otpInput: OtpDto): Promise<OtpResponse> {
     try {
@@ -197,7 +197,7 @@ export class AuthService {
   }
 
   /**
-   * Get current user profile using Celler Hut API
+   * Get current user profile using Ekasi Cart API
    */
   async me(token?: string): Promise<User> {
     try {
@@ -214,7 +214,7 @@ export class AuthService {
   }
 
   /**
-   * Logout user using Celler Hut API
+   * Logout user using Ekasi Cart API
    */
   async logout(token?: string): Promise<CoreResponse> {
     try {
@@ -236,7 +236,7 @@ export class AuthService {
   }
 
   /**
-   * Refresh authentication token using Celler Hut API
+   * Refresh authentication token using Ekasi Cart API
    */
   async refreshToken(refreshToken: string): Promise<AuthResponse> {
     try {
@@ -248,7 +248,7 @@ export class AuthService {
   }
 
   /**
-   * Update user profile using Celler Hut API
+   * Update user profile using Ekasi Cart API
    */
   async updateProfile(token: string, profileData: any): Promise<User> {
     try {

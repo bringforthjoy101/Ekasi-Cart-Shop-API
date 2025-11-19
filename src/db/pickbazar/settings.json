@@ -45,10 +45,10 @@
       "twitterCardType": null
     },
     "logo": {
-      "thumbnail": "https://kore-smart.nyc3.digitaloceanspaces.com/cellar-hut/ICON%201%20(1).png",
-      "original": "https://kore-smart.nyc3.digitaloceanspaces.com/cellar-hut/ICON%201%20(1).png",
+      "thumbnail": "https://kore-smart.nyc3.cdn.digitaloceanspaces.com/ekasi-cart/ekasi-cart-logo.png",
+      "original": "https://kore-smart.nyc3.cdn.digitaloceanspaces.com/ekasi-cart/ekasi-cart-logo.png",
       "id": 2298,
-      "file_name": "1750099080478_mamn7.png"
+      "file_name": "ekasi-cart-logo.png"
     },
     "collapseLogo": {
       "thumbnail": "https://kore-smart.nyc3.digitaloceanspaces.com/uploads/images/1750099184517_5bazs.png",
@@ -59,7 +59,7 @@
     "useOtp": false,
     "currency": "ZAR",
     "taxClass": "1",
-    "siteTitle": "CellerHut",
+    "siteTitle": "Ekasicart",
     "freeShipping": false,
     "signupPoints": 100,
     "siteSubtitle": "Your next ecommerce",
@@ -80,8 +80,8 @@
           "icon": "InstagramIcon"
         }
       ],
-      "website": "https://cellerhut.com",
-      "emailAddress": "info@cellerhut.com",
+      "website": "https://ekasicart.com",
+      "emailAddress": "info@ekasicart.com",
       "location": {
         "lat": 42.9585979,
         "lng": -76.9087202,
@@ -121,10 +121,10 @@
     "useAi": false,
     "defaultAi": "openai",
     "maxShopDistance": null,
-    "siteLink": "https://cellarhut.com",
-    "copyrightText": "Copyright \u00a9 CellarHut. All rights reserved worldwide.",
-    "externalText": "CellarHut",
-    "externalLink": "https://cellarhut.com",
+    "siteLink": "https://ekasicart.com",
+    "copyrightText": "Copyright \u00a9 EkasiCart. All rights reserved worldwide.",
+    "externalText": "EkasiCart",
+    "externalLink": "https://ekasicart.com",
     "smsEvent": {
       "admin": {
         "statusChangeOrder": false,
@@ -182,7 +182,7 @@
       "overlayColorRange": null,
       "description": "We are currently undergoing essential maintenance to elevate your browsing experience. Our team is working diligently to implement improvements that will bring you an even more seamless and enjoyable interaction with our site. During this period, you may experience temporary inconveniences. We appreciate your patience and understanding. Thank you for being a part of our community, and we look forward to unveiling the enhanced features and content soon.",
       "newsLetterDescription": "Stay in the loop! Subscribe to our newsletter for exclusive deals and the latest trends delivered straight to your inbox. Elevate your shopping experience with insider access.",
-      "aboutUsDescription": "Welcome to Pickbazar, your go-to destination for curated excellence. Discover a fusion of style, quality, and affordability in every click. Join our community and elevate your shopping experience with us!",
+      "aboutUsDescription": "Welcome to EkasiCart, your go-to destination for curated excellence. Discover a fusion of style, quality, and affordability in every click. Join our community and elevate your shopping experience with us!",
       "image": {
         "id": 1794,
         "file_name": "background.png",
@@ -192,7 +192,7 @@
       "start": "2024-01-31T06:33:30.201258Z",
       "until": "2024-02-01T06:33:30.201274Z"
     },
-    "isPromoPopUp": true,
+    "isPromoPopUp": false,
     "promoPopup": {
       "image": {
         "id": 1793,

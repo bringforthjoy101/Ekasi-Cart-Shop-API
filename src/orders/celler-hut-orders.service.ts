@@ -17,25 +17,25 @@ import {
 @Injectable()
 export class CellerHutOrdersService {
   /**
-   * Create order in Celler Hut API
+   * Create order in Ekasi Cart API
    * Main API now returns { order, payment } structure after Phase 7 integration
    */
   async create(createOrderDto: CreateOrderDto, token?: string): Promise<Order> {
     try {
-      console.log('[Celler Hut Orders] Transforming order data for Celler Hut API...');
-      // Transform PickBazar order to Celler Hut format
+      console.log('[Ekasi Cart Orders] Transforming order data for Ekasi Cart API...');
+      // Transform PickBazar order to Ekasi Cart format
       const cellerHutOrderData = transformOrderForCellerHut(createOrderDto);
-      console.log('[Celler Hut Orders] Transformed data:', JSON.stringify(cellerHutOrderData, null, 2));
+      console.log('[Ekasi Cart Orders] Transformed data:', JSON.stringify(cellerHutOrderData, null, 2));
 
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      console.log('[Celler Hut Orders] Sending POST request to /ecommerce/orders...');
+      console.log('[Ekasi Cart Orders] Sending POST request to /ecommerce/orders...');
       const response = await cellerHutAPI.post(
         '/ecommerce/orders',
         cellerHutOrderData,
         { headers },
       );
-      console.log('[Celler Hut Orders] Response received:', response.status);
-      console.log('[Celler Hut Orders] Response data:', JSON.stringify(response.data, null, 2));
+      console.log('[Ekasi Cart Orders] Response received:', response.status);
+      console.log('[Ekasi Cart Orders] Response data:', JSON.stringify(response.data, null, 2));
 
       // Main API now returns { order, payment } structure
       // Handle both old format (just order) and new format (order + payment)
@@ -47,24 +47,24 @@ export class CellerHutOrdersService {
 
       // Attach payment data if available (for frontend to handle redirects)
       if (paymentData) {
-        console.log('[Celler Hut Orders] Payment data received:', JSON.stringify(paymentData, null, 2));
+        console.log('[Ekasi Cart Orders] Payment data received:', JSON.stringify(paymentData, null, 2));
         (transformedOrder as any).payment = paymentData;
       }
 
-      console.log('[Celler Hut Orders] Transformed order:', JSON.stringify(transformedOrder, null, 2));
+      console.log('[Ekasi Cart Orders] Transformed order:', JSON.stringify(transformedOrder, null, 2));
       return transformedOrder;
     } catch (error) {
-      console.error('[Celler Hut Orders] Create order failed:', error.message);
+      console.error('[Ekasi Cart Orders] Create order failed:', error.message);
       if (error.response) {
-        console.error('[Celler Hut Orders] API Response:', error.response.data);
-        console.error('[Celler Hut Orders] API Status:', error.response.status);
+        console.error('[Ekasi Cart Orders] API Response:', error.response.data);
+        console.error('[Ekasi Cart Orders] API Status:', error.response.status);
       }
-      throw new Error('Failed to create order in Celler Hut API');
+      throw new Error('Failed to create order in Ekasi Cart API');
     }
   }
 
   /**
-   * Get orders from Celler Hut API with pagination and filtering
+   * Get orders from Ekasi Cart API with pagination and filtering
    */
   async getOrders(
     {
@@ -96,7 +96,7 @@ export class CellerHutOrdersService {
       });
 
       console.log('response.data', response);
-      // Transform Celler Hut response to PickBazar format
+      // Transform Ekasi Cart response to PickBazar format
       const transformedData = Array.isArray(response.data)
         ? response.data.map(transformCellerHutOrder)
         : [];
@@ -109,13 +109,13 @@ export class CellerHutOrdersService {
         ...pagination,
       };
     } catch (error) {
-      console.error('[Celler Hut Orders] Get orders failed:', error);
-      throw new Error('Failed to fetch orders from Celler Hut API');
+      console.error('[Ekasi Cart Orders] Get orders failed:', error);
+      throw new Error('Failed to fetch orders from Ekasi Cart API');
     }
   }
 
   /**
-   * Get order by ID or tracking number from Celler Hut API
+   * Get order by ID or tracking number from Ekasi Cart API
    */
   async getOrderByIdOrTrackingNumber(
     id: string,
@@ -144,7 +144,7 @@ export class CellerHutOrdersService {
       // Build gps_tracking object from order data if tracking is enabled
       // No need for separate API call - tracking fields already in order response
       if (orderData.tracking_enabled && orderData.tookan_job_id) {
-        console.log(`[Celler Hut Orders] Adding GPS tracking data for order ${orderData.tracking_number}`);
+        console.log(`[Ekasi Cart Orders] Adding GPS tracking data for order ${orderData.tracking_number}`);
         transformedOrder.gps_tracking = {
           trackingEnabled: orderData.tracking_enabled,
           trackingUrl: orderData.tracking_url,
@@ -153,13 +153,13 @@ export class CellerHutOrdersService {
           orderNumber: orderData.tracking_number,
           orderStatus: orderData.order_status,
         };
-        console.log('[Celler Hut Orders] GPS tracking data added successfully');
+        console.log('[Ekasi Cart Orders] GPS tracking data added successfully');
       }
 
       return transformedOrder;
     } catch (error) {
       console.error(
-        '[Celler Hut Orders] Get order by ID/tracking failed:',
+        '[Ekasi Cart Orders] Get order by ID/tracking failed:',
         error,
       );
       throw new Error(`Order with ID/tracking "${id}" not found`);
@@ -167,11 +167,11 @@ export class CellerHutOrdersService {
   }
 
   /**
-   * Update order in Celler Hut API
+   * Update order in Ekasi Cart API
    */
   async update(id: number, updateOrderDto: UpdateOrderDto): Promise<Order> {
     try {
-      // Transform PickBazar order to Celler Hut format
+      // Transform PickBazar order to Ekasi Cart format
       const cellerHutOrderData = transformOrderForCellerHut(updateOrderDto);
 
       const response = await cellerHutAPI.put(
@@ -182,26 +182,26 @@ export class CellerHutOrdersService {
       // Transform response back to PickBazar format
       return transformCellerHutOrder(response.data);
     } catch (error) {
-      console.error('[Celler Hut Orders] Update order failed:', error);
-      throw new Error(`Failed to update order ${id} in Celler Hut API`);
+      console.error('[Ekasi Cart Orders] Update order failed:', error);
+      throw new Error(`Failed to update order ${id} in Ekasi Cart API`);
     }
   }
 
   /**
-   * Cancel order in Celler Hut API
+   * Cancel order in Ekasi Cart API
    */
   async cancel(id: number): Promise<Order> {
     try {
       const response = await cellerHutAPI.post(`/orders/${id}/cancel`);
       return transformCellerHutOrder(response.data);
     } catch (error) {
-      console.error('[Celler Hut Orders] Cancel order failed:', error);
-      throw new Error(`Failed to cancel order ${id} in Celler Hut API`);
+      console.error('[Ekasi Cart Orders] Cancel order failed:', error);
+      throw new Error(`Failed to cancel order ${id} in Ekasi Cart API`);
     }
   }
 
   /**
-   * Get order status from Celler Hut API
+   * Get order status from Ekasi Cart API
    */
   async getOrderStatus(id: number): Promise<any> {
     try {
@@ -214,13 +214,13 @@ export class CellerHutOrdersService {
         updated_at: response.data.updated_at,
       };
     } catch (error) {
-      console.error('[Celler Hut Orders] Get order status failed:', error);
+      console.error('[Ekasi Cart Orders] Get order status failed:', error);
       throw new Error(`Failed to get status for order ${id}`);
     }
   }
 
   /**
-   * Update order status in Celler Hut API
+   * Update order status in Ekasi Cart API
    */
   async updateOrderStatus(id: number, status: OrderStatusType): Promise<Order> {
     try {
@@ -230,13 +230,13 @@ export class CellerHutOrdersService {
 
       return transformCellerHutOrder(response.data);
     } catch (error) {
-      console.error('[Celler Hut Orders] Update order status failed:', error);
+      console.error('[Ekasi Cart Orders] Update order status failed:', error);
       throw new Error(`Failed to update status for order ${id}`);
     }
   }
 
   /**
-   * Update payment status in Celler Hut API
+   * Update payment status in Ekasi Cart API
    */
   async updatePaymentStatus(
     id: number,
@@ -249,13 +249,13 @@ export class CellerHutOrdersService {
 
       return transformCellerHutOrder(response.data);
     } catch (error) {
-      console.error('[Celler Hut Orders] Update payment status failed:', error);
+      console.error('[Ekasi Cart Orders] Update payment status failed:', error);
       throw new Error(`Failed to update payment status for order ${id}`);
     }
   }
 
   /**
-   * Get orders by customer from Celler Hut API
+   * Get orders by customer from Ekasi Cart API
    */
   async getOrdersByCustomer(
     customerId: number,
@@ -283,7 +283,7 @@ export class CellerHutOrdersService {
       };
     } catch (error) {
       console.error(
-        '[Celler Hut Orders] Get orders by customer failed:',
+        '[Ekasi Cart Orders] Get orders by customer failed:',
         error,
       );
       throw new Error(`Failed to fetch orders for customer ${customerId}`);
@@ -291,7 +291,7 @@ export class CellerHutOrdersService {
   }
 
   /**
-   * Get orders by shop from Celler Hut API
+   * Get orders by shop from Ekasi Cart API
    */
   async getOrdersByShop(
     shopId: number,
@@ -318,13 +318,13 @@ export class CellerHutOrdersService {
         ...pagination,
       };
     } catch (error) {
-      console.error('[Celler Hut Orders] Get orders by shop failed:', error);
+      console.error('[Ekasi Cart Orders] Get orders by shop failed:', error);
       throw new Error(`Failed to fetch orders for shop ${shopId}`);
     }
   }
 
   /**
-   * Process payment for order in Celler Hut API
+   * Process payment for order in Ekasi Cart API
    */
   async processPayment(orderId: number, paymentData: any): Promise<any> {
     try {
@@ -339,13 +339,13 @@ export class CellerHutOrdersService {
         message: response.data.message || 'Payment processed successfully',
       };
     } catch (error) {
-      console.error('[Celler Hut Orders] Process payment failed:', error);
+      console.error('[Ekasi Cart Orders] Process payment failed:', error);
       throw new Error(`Failed to process payment for order ${orderId}`);
     }
   }
 
   /**
-   * Get order invoice from Celler Hut API
+   * Get order invoice from Ekasi Cart API
    */
   async getOrderInvoice(orderId: number): Promise<any> {
     try {
@@ -356,13 +356,13 @@ export class CellerHutOrdersService {
         generated_at: response.data.generated_at,
       };
     } catch (error) {
-      console.error('[Celler Hut Orders] Get order invoice failed:', error);
+      console.error('[Ekasi Cart Orders] Get order invoice failed:', error);
       throw new Error(`Failed to get invoice for order ${orderId}`);
     }
   }
 
   /**
-   * Get order tracking information from Celler Hut API
+   * Get order tracking information from Ekasi Cart API
    */
   async getOrderTracking(trackingNumber: string): Promise<any> {
     try {
@@ -377,13 +377,13 @@ export class CellerHutOrdersService {
         carrier: response.data.carrier,
       };
     } catch (error) {
-      console.error('[Celler Hut Orders] Get order tracking failed:', error);
+      console.error('[Ekasi Cart Orders] Get order tracking failed:', error);
       throw new Error(`Failed to get tracking for order ${trackingNumber}`);
     }
   }
 
   /**
-   * Verify checkout data with Celler Hut API
+   * Verify checkout data with Ekasi Cart API
    */
   async verifyCheckout(checkoutData: any, token?: string): Promise<any> {
     try {
@@ -404,13 +404,13 @@ export class CellerHutOrdersService {
         available_coupons: response.data.data.available_coupons || [],
       };
     } catch (error) {
-      console.error('[Celler Hut Orders] Verify checkout failed:', error);
+      console.error('[Ekasi Cart Orders] Verify checkout failed:', error);
       throw new Error('Failed to verify checkout data');
     }
   }
 
   /**
-   * Get order analytics from Celler Hut API
+   * Get order analytics from Ekasi Cart API
    */
   async getOrderAnalytics(shopId?: number): Promise<any> {
     try {
@@ -427,7 +427,7 @@ export class CellerHutOrdersService {
         average_order_value: response.data.average_order_value || 0,
       };
     } catch (error) {
-      console.error('[Celler Hut Orders] Get order analytics failed:', error);
+      console.error('[Ekasi Cart Orders] Get order analytics failed:', error);
       return {
         total_orders: 0,
         total_revenue: 0,
@@ -447,7 +447,7 @@ export class CellerHutOrdersService {
    */
   async validateCheckoutForPayment(checkoutData: any, token?: string): Promise<any> {
     try {
-      console.log('[Celler Hut Orders] Validating checkout for payment-first flow...');
+      console.log('[Ekasi Cart Orders] Validating checkout for payment-first flow...');
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
       const response = await cellerHutAPI.post(
@@ -456,7 +456,7 @@ export class CellerHutOrdersService {
         { headers },
       );
 
-      console.log('[Celler Hut Orders] Checkout validation response:', response.data);
+      console.log('[Ekasi Cart Orders] Checkout validation response:', response.data);
 
       return {
         sessionId: response.data.data.sessionId,
@@ -464,9 +464,9 @@ export class CellerHutOrdersService {
         message: response.data.message,
       };
     } catch (error) {
-      console.error('[Celler Hut Orders] Validate checkout for payment failed:', error.message);
+      console.error('[Ekasi Cart Orders] Validate checkout for payment failed:', error.message);
       if (error.response) {
-        console.error('[Celler Hut Orders] API Response:', error.response.data);
+        console.error('[Ekasi Cart Orders] API Response:', error.response.data);
         throw new Error(error.response.data.message || 'Failed to validate checkout');
       }
       throw new Error('Failed to validate checkout for payment');
@@ -480,8 +480,8 @@ export class CellerHutOrdersService {
    */
   async initiatePaymentFirst(paymentData: any, token?: string): Promise<any> {
     try {
-      console.log('[Celler Hut Orders] Initiating payment-first flow...');
-      console.log('[Celler Hut Orders] Payment data:', JSON.stringify(paymentData, null, 2));
+      console.log('[Ekasi Cart Orders] Initiating payment-first flow...');
+      console.log('[Ekasi Cart Orders] Payment data:', JSON.stringify(paymentData, null, 2));
 
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
@@ -491,7 +491,7 @@ export class CellerHutOrdersService {
         { headers },
       );
 
-      console.log('[Celler Hut Orders] Payment initiation response:', response);
+      console.log('[Ekasi Cart Orders] Payment initiation response:', response);
 
       return {
         transactionId: response.data.transactionId,
@@ -501,9 +501,9 @@ export class CellerHutOrdersService {
         message: response.data.message,
       };
     } catch (error) {
-      console.error('[Celler Hut Orders] Initiate payment-first failed:', error.message);
+      console.error('[Ekasi Cart Orders] Initiate payment-first failed:', error.message);
       if (error.response) {
-        console.error('[Celler Hut Orders] API Response:', error.response.data);
+        console.error('[Ekasi Cart Orders] API Response:', error.response.data);
         throw new Error(error.response.data.message || 'Failed to initiate payment');
       }
       throw new Error('Failed to initiate payment');
@@ -517,7 +517,7 @@ export class CellerHutOrdersService {
    */
   async getCheckoutSession(sessionId: string, token?: string): Promise<any> {
     try {
-      console.log('[Celler Hut Orders] Getting checkout session:', sessionId);
+      console.log('[Ekasi Cart Orders] Getting checkout session:', sessionId);
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
       const response = await cellerHutAPI.get(
@@ -527,7 +527,7 @@ export class CellerHutOrdersService {
 
       return response.data.data;
     } catch (error) {
-      console.error('[Celler Hut Orders] Get checkout session failed:', error.message);
+      console.error('[Ekasi Cart Orders] Get checkout session failed:', error.message);
       throw new Error('Failed to get checkout session');
     }
   }
@@ -540,7 +540,7 @@ export class CellerHutOrdersService {
    */
   async verifyPaymentForOrder(data: { checkoutId: string }, token?: string): Promise<any> {
     try {
-      console.log('[Celler Hut Orders] Verifying payment for order:', data.checkoutId);
+      console.log('[Ekasi Cart Orders] Verifying payment for order:', data.checkoutId);
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
       const response = await cellerHutAPI.post(
@@ -549,11 +549,11 @@ export class CellerHutOrdersService {
         { headers },
       );
 
-      console.log('[Celler Hut Orders] Payment verification response:', response.data);
+      console.log('[Ekasi Cart Orders] Payment verification response:', response.data);
 
       return response.data;
     } catch (error) {
-      console.error('[Celler Hut Orders] Verify payment for order failed:', error.message);
+      console.error('[Ekasi Cart Orders] Verify payment for order failed:', error.message);
       throw new Error('Failed to verify payment for order');
     }
   }

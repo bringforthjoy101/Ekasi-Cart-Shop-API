@@ -50,7 +50,7 @@ export class ProductsService {
     page,
     search,
   }: GetProductsDto): Promise<ProductPaginator> {
-    // Use Celler Hut API for product data
+    // Use Ekasi Cart API for product data
     try {
       return await this.cellerHutProductsService.getProducts({
         limit,
@@ -59,11 +59,11 @@ export class ProductsService {
       });
     } catch (error) {
       console.error(
-        '[Products Service] Celler Hut API failed, falling back to local data:',
+        '[Products Service] Ekasi Cart API failed, falling back to local data:',
         error,
       );
 
-      // Fallback to local data if Celler Hut API fails
+      // Fallback to local data if Ekasi Cart API fails
       if (!page) page = 1;
       if (!limit) limit = 30;
       const startIndex = (page - 1) * limit;
@@ -107,16 +107,16 @@ export class ProductsService {
   }
 
   async getProductBySlug(slug: string): Promise<any> {
-    // Use Celler Hut API for product data
+    // Use Ekasi Cart API for product data
     try {
       return await this.cellerHutProductsService.getProductBySlug(slug);
     } catch (error) {
       console.error(
-        '[Products Service] Celler Hut API failed, falling back to local data:',
+        '[Products Service] Ekasi Cart API failed, falling back to local data:',
         error,
       );
 
-      // Fallback to local data if Celler Hut API fails
+      // Fallback to local data if Ekasi Cart API fails
       const product = this.products.find((p) => p.slug === slug);
       if (!product) {
         throw new Error(`Product with slug "${slug}" not found`);
@@ -136,7 +136,7 @@ export class ProductsService {
     limit,
     type_slug,
   }: GetPopularProductsDto): Promise<any[]> {
-    // Use Celler Hut API for product data
+    // Use Ekasi Cart API for product data
     try {
       return await this.cellerHutProductsService.getPopularProducts({
         limit,
@@ -144,11 +144,11 @@ export class ProductsService {
       });
     } catch (error) {
       console.error(
-        '[Products Service] Celler Hut API failed, falling back to local data:',
+        '[Products Service] Ekasi Cart API failed, falling back to local data:',
         error,
       );
 
-      // Fallback to local data if Celler Hut API fails
+      // Fallback to local data if Ekasi Cart API fails
       let data: any = this.popularProducts;
       if (type_slug) {
         data = fuse.search(type_slug)?.map(({ item }) => item);

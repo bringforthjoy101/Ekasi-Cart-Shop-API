@@ -12,7 +12,7 @@ import { Category } from './entities/category.entity';
 @Injectable()
 export class CellerHutCategoriesService {
   /**
-   * Create category in Celler Hut API
+   * Create category in Ekasi Cart API
    */
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     try {
@@ -22,13 +22,13 @@ export class CellerHutCategoriesService {
       );
       return transformCellerHutCategory(response.data);
     } catch (error) {
-      console.error('[Celler Hut Categories] Create category failed:', error);
-      throw new Error('Failed to create category in Celler Hut API');
+      console.error('[Ekasi Cart Categories] Create category failed:', error);
+      throw new Error('Failed to create category in Ekasi Cart API');
     }
   }
 
   /**
-   * Get categories from Celler Hut API with pagination and filtering
+   * Get categories from Ekasi Cart API with pagination and filtering
    */
   async getCategories({
     limit,
@@ -59,7 +59,7 @@ export class CellerHutCategoriesService {
       });
       console.log(response.data.data);
 
-      // Transform Celler Hut response to PickBazar format
+      // Transform Ekasi Cart response to PickBazar format
       const transformedData = Array.isArray(response.data.data)
         ? response.data.data.map(transformCellerHutCategory)
         : [];
@@ -72,13 +72,13 @@ export class CellerHutCategoriesService {
         ...pagination,
       };
     } catch (error) {
-      console.error('[Celler Hut Categories] Get categories failed:', error);
-      throw new Error('Failed to fetch categories from Celler Hut API');
+      console.error('[Ekasi Cart Categories] Get categories failed:', error);
+      throw new Error('Failed to fetch categories from Ekasi Cart API');
     }
   }
 
   /**
-   * Get category by ID or slug from Celler Hut API
+   * Get category by ID or slug from Ekasi Cart API
    */
   async getCategory(param: string, language: string): Promise<Category> {
     try {
@@ -91,13 +91,13 @@ export class CellerHutCategoriesService {
 
       return transformCellerHutCategory(response.data);
     } catch (error) {
-      console.error('[Celler Hut Categories] Get category failed:', error);
+      console.error('[Ekasi Cart Categories] Get category failed:', error);
       throw new Error(`Category with identifier "${param}" not found`);
     }
   }
 
   /**
-   * Update category in Celler Hut API
+   * Update category in Ekasi Cart API
    */
   async update(
     id: number,
@@ -110,21 +110,21 @@ export class CellerHutCategoriesService {
       );
       return transformCellerHutCategory(response.data);
     } catch (error) {
-      console.error('[Celler Hut Categories] Update category failed:', error);
-      throw new Error(`Failed to update category ${id} in Celler Hut API`);
+      console.error('[Ekasi Cart Categories] Update category failed:', error);
+      throw new Error(`Failed to update category ${id} in Ekasi Cart API`);
     }
   }
 
   /**
-   * Delete category from Celler Hut API
+   * Delete category from Ekasi Cart API
    */
   async remove(id: number): Promise<string> {
     try {
       await cellerHutAPI.delete(`/ecommerce/categories/${id}`);
       return `Category #${id} has been successfully removed`;
     } catch (error) {
-      console.error('[Celler Hut Categories] Remove category failed:', error);
-      throw new Error(`Failed to remove category ${id} from Celler Hut API`);
+      console.error('[Ekasi Cart Categories] Remove category failed:', error);
+      throw new Error(`Failed to remove category ${id} from Ekasi Cart API`);
     }
   }
 
@@ -148,7 +148,7 @@ export class CellerHutCategoriesService {
         : [];
     } catch (error) {
       console.error(
-        '[Celler Hut Categories] Get liquor categories failed:',
+        '[Ekasi Cart Categories] Get liquor categories failed:',
         error,
       );
       return [];
@@ -156,7 +156,7 @@ export class CellerHutCategoriesService {
   }
 
   /**
-   * Get category hierarchy from Celler Hut API
+   * Get category hierarchy from Ekasi Cart API
    */
   async getCategoryHierarchy(): Promise<Category[]> {
     try {
@@ -169,7 +169,7 @@ export class CellerHutCategoriesService {
         : [];
     } catch (error) {
       console.error(
-        '[Celler Hut Categories] Get category hierarchy failed:',
+        '[Ekasi Cart Categories] Get category hierarchy failed:',
         error,
       );
       return [];
@@ -195,7 +195,7 @@ export class CellerHutCategoriesService {
         : [];
     } catch (error) {
       console.error(
-        '[Celler Hut Categories] Get categories by type failed:',
+        '[Ekasi Cart Categories] Get categories by type failed:',
         error,
       );
       return [];
@@ -203,7 +203,7 @@ export class CellerHutCategoriesService {
   }
 
   /**
-   * Get parent categories from Celler Hut API
+   * Get parent categories from Ekasi Cart API
    */
   async getParentCategories(): Promise<Category[]> {
     try {
@@ -221,7 +221,7 @@ export class CellerHutCategoriesService {
         : [];
     } catch (error) {
       console.error(
-        '[Celler Hut Categories] Get parent categories failed:',
+        '[Ekasi Cart Categories] Get parent categories failed:',
         error,
       );
       return [];
@@ -247,7 +247,7 @@ export class CellerHutCategoriesService {
         : [];
     } catch (error) {
       console.error(
-        '[Celler Hut Categories] Get child categories failed:',
+        '[Ekasi Cart Categories] Get child categories failed:',
         error,
       );
       return [];
@@ -281,13 +281,13 @@ export class CellerHutCategoriesService {
         ? response.data.data.map(transformCellerHutCategory)
         : [];
     } catch (error) {
-      console.error('[Celler Hut Categories] Search categories failed:', error);
+      console.error('[Ekasi Cart Categories] Search categories failed:', error);
       return [];
     }
   }
 
   /**
-   * Get category statistics from Celler Hut API
+   * Get category statistics from Ekasi Cart API
    */
   async getCategoryStats(categoryId: number): Promise<any> {
     try {
@@ -303,7 +303,7 @@ export class CellerHutCategoriesService {
       };
     } catch (error) {
       console.error(
-        '[Celler Hut Categories] Get category stats failed:',
+        '[Ekasi Cart Categories] Get category stats failed:',
         error,
       );
       return {
@@ -317,7 +317,7 @@ export class CellerHutCategoriesService {
   }
 
   /**
-   * Parse PickBazar search parameters for Celler Hut API
+   * Parse PickBazar search parameters for Ekasi Cart API
    */
   private parseSearchParams(search: string): any {
     const params: any = {};
