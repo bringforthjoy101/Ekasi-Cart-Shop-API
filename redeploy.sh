@@ -71,8 +71,8 @@ main() {
     fi
 
     # Determine APP_DIR (shop-api subdirectory)
-    if [ -d "$REPO_DIR/shop-api" ]; then
-        APP_DIR="$REPO_DIR/shop-api"
+    if [ -d "$REPO_DIR" ]; then
+        APP_DIR="$REPO_DIR"
         log_info "Using application directory: $APP_DIR"
     else
         log_error "shop-api directory not found in repository!"
@@ -119,12 +119,12 @@ main() {
     # Step 5: Check if package.json changed
     log_step "Checking for dependency changes..."
     PACKAGE_JSON_CHANGED=false
-    if git diff --name-only $CURRENT_COMMIT $NEW_COMMIT | grep -q "shop-api/package.json"; then
+    if git diff --name-only $CURRENT_COMMIT $NEW_COMMIT | grep -q "package.json"; then
         PACKAGE_JSON_CHANGED=true
     fi
 
     # Step 6: Check if .env.example changed
-    if git diff --name-only $CURRENT_COMMIT $NEW_COMMIT | grep -q "shop-api/.env.example"; then
+    if git diff --name-only $CURRENT_COMMIT $NEW_COMMIT | grep -q ".env.example"; then
         log_warn ".env.example has been updated!"
         log_warn "Please review and update your .env file if needed:"
         log_warn "  diff $APP_DIR/.env.example $APP_DIR/.env"
@@ -147,7 +147,7 @@ main() {
     # Step 9: Check if source code changed (requires rebuild)
     log_step "Checking if rebuild is needed..."
     CODE_CHANGED=false
-    if git diff --name-only $CURRENT_COMMIT $NEW_COMMIT | grep -q "shop-api/src/\|shop-api/tsconfig.json\|shop-api/nest-cli.json"; then
+    if git diff --name-only $CURRENT_COMMIT $NEW_COMMIT | grep -q "src/\|tsconfig.json\|nest-cli.json"; then
         CODE_CHANGED=true
     fi
 
